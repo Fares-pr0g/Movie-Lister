@@ -6,16 +6,23 @@ export const useMovieContext= () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
     const [favorites, setFavorites] = useState([]);
+    const [watchList, setWatchList] = useState([]);
 
     useEffect(() => {
         const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
         setFavorites(storedFavorites);
+
+        const storedWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
+        setWatchList(storedWatchList);
     }, []);
 
     useEffect(() =>{
         localStorage.setItem('favorites', JSON.stringify(favorites));
     }, [favorites]);
 
+    useEffect(() =>{
+        localStorage.setItem('watchList', JSON.stringify(watchList));
+    }, [watchList]);
 
     const addToFavorites =(movie) => {
         setFavorites(prev => [...prev, movie]);
@@ -28,11 +35,27 @@ export const MovieProvider = ({ children }) => {
         return favorites.some(movie => movie.id === movieId);
     }
 
+    const addToWatchList = (movie) => {
+        setWatchList(prev => [...prev, movie]);
+    }
+
+    const removeFromWatchList = (movieId) => {
+        setWatchList(prev => prev.filter(movie => movie.id !== movieId));
+    }
+
+    const isInWatchList = (movieId) => {
+        return watchList.some(movie => movie.id === movieId);
+    }
+
     const value={
         favorites,
         addToFavorites,
         removeFromFavorites,
-        isFavorite
+        isFavorite,
+        watchList,
+        addToWatchList,
+        removeFromWatchList,
+        isInWatchList
     }
 
     return (

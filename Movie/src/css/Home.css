@@ -46,9 +46,10 @@
 .movies-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1vw;
   padding: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
+
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;

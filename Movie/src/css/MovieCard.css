@@ -52,7 +52,8 @@
   opacity: 1;
 }
 
-.favorite {
+.favorite-btn,
+.watchlist-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -71,9 +72,21 @@
   cursor: pointer;
 }
 
-.favorite:hover {
+.watchlist-btn{
+  left: 1rem;
+}
+.watchlist-btn.active{
+  font-size: 24px;
+  color:  rgb(122, 140, 255)
+}
+.favorite-btn:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+.watchlist-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 
 .movie-info {
   padding: 1rem;

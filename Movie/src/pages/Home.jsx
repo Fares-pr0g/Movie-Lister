@@ -1,29 +1,70 @@
-import MovieCard from "../components/MovieCard"
-import {useState} from "react";
-
+import React, { useState,useEffect } from 'react';
+import {searchMovies, getPopularMovies} from '../services/api';
+import MovieCard from '../components/MovieCard';
+import "../css/Home.css"
 
 function Home() {
+    const [searchQuery, setSearchQuerry] = useState("");
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const movies =[
-        {id: 1, title: "Inception", release_date: "2010-07-16", },
-        {id: 2, title: "The Dark Knight", release_date: "2008-07-18", },
-        {id: 3, title: "Interstellar", release_date: "2014-11-07", },
-    ]
+    useEffect (()=>{
+        const loadPopularMovies = async () => {
+            try{
+                const popularMovies = await getPopularMovies();
+                setMovies(popularMovies);
+            } catch (error) {
+                console.error("Error fetching popular movies:", error);
+                setError("Failed to load movies...");
+            }finally{
+                setLoading(false);
+            }
+        }
 
-    const handleSearch =()=>{
+        loadPopularMovies();
+    }, [])
 
-    }
-    return <div className="home">
+
+    const handleSearch = async (e)=>{
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+        if (loading) return; // Prevent search while loading
+
+        setLoading(true);
+        try{
+            const results = await searchMovies(searchQuery);
+            setMovies(results);
+            setError(null);
+
+        }catch (err){
+            setError("Failed to search movies ...");
+            console.log(err);
+        } finally{
+            setLoading(false);
+        }
+        setSearchQuerry(""); // Clear search input after search
+    };
+
+    return (
+    <div className="home">
         <form onSubmit={handleSearch} className="search-form">
-            <input type="text" placeholder="Search for a movie..." className="search-input"/>
+            <input value={searchQuery} onChange={(e) => setSearchQuerry(e.target.value)} type="text" placeholder="Search for a movie..." className="search-input"/>
             <button type="submit" className="search-button"> Search</button>
         </form>
         
-        <div className="movie-grid">
-            {movies.map(movie => <MovieCard key={movie.id} movie={movie}/>) }
+        {error && <div className="error-message ">{error}</div>}
 
+        {loading? <div className="loading">Loading...</div> :(
+        <div className="movie-grid">
+            {movies.map(movie => 
+             <MovieCard key={movie.id} movie={movie}/>
+            ) }
         </div>
-    </div>
+        )}
+        
+
+    </div>)
 }
 
 export default Home;

@@ -5,18 +5,18 @@ import { MdOutlineAddCircleOutline } from "react-icons/md";
 
 function MovieCard({movie}) {
     const { addToFavorites, removeFromFavorites, isFavorite, addToWatchList, removeFromWatchList, isInWatchList } = useMovieContext();
-    const favorite = isFavorite(movie.id);
-    const inWatchList = isInWatchList(movie.id);
+    const favorite = isFavorite(movie._id);
+    const inWatchList = isInWatchList(movie._id);
 
     function onFavClick(e){
         e.preventDefault();
-        if (favorite) removeFromFavorites(movie.id);
+        if (favorite) removeFromFavorites(movie._id);
         else addToFavorites(movie);
     }
 
     function onWatchListClick(e){
         e.preventDefault();
-        if (inWatchList) removeFromWatchList(movie.id);
+        if (inWatchList) removeFromWatchList(movie._id);
         else addToWatchList(movie);
     }
     return(

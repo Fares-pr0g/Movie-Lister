@@ -11,7 +11,7 @@ function MyWatchList(){
                 <h2 className="my-watch-list-title">My Watch List</h2>
                 <div className="movies-grid">
                     {watchList.map(movie => 
-                        <MovieCard key={movie.id} movie={movie}/>
+                        <MovieCard key={movie._id} movie={movie}/>
                     )}
                 </div>
             </div>

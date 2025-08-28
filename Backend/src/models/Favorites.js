@@ -13,7 +13,7 @@ const movieSchema = new mongoose.Schema({
 {timestamps: true}// createdAt, updatedAt
 );
 
-const Movie = mongoose.model("Movie", movieSchema);
+const Favorites = mongoose.model("Favorites", movieSchema);
 
-export default Movie;
+export default Favorites;
 

@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import {searchMovies, getPopularMovies} from '../services/api';
 import MovieCard from '../components/MovieCard';
 import "../css/Home.css"
+import NavBar from '../components/NavBar';
 
 function Home() {
     const [searchQuery, setSearchQuerry] = useState("");
@@ -46,7 +47,7 @@ function Home() {
         setSearchQuerry(""); // Clear search input after search
     };
 
-    return (
+    return (<><NavBar />
     <div className="home">
         <form onSubmit={handleSearch} className="search-form">
             <input value={searchQuery} onChange={(e) => setSearchQuerry(e.target.value)} type="text" placeholder="Search for a movie..." className="search-input"/>
@@ -64,7 +65,7 @@ function Home() {
         )}
         
 
-    </div>)
+    </div></>)
 }
 
 export default Home;

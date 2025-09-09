@@ -1,15 +1,20 @@
-import express from 'express';
+
 import dotenv from 'dotenv';
-import movieRouter from './routes/movieRoutes.js';
-import { connectDB } from './config/db.js';
-import authRouter from './routes/authRoutes.js';
+dotenv.config();
+
+
+
+import express from 'express';
 import MongoStore from 'connect-mongo';
+import { connectDB } from './config/db.js';
 import cors from 'cors';
 import session from 'express-session';
 import passport from './config/passport.js'
-import User from './models/UserModel.js';
 
-dotenv.config();
+import movieRouter from './routes/movieRoutes.js';
+import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
+
 
 const app = express();
 
@@ -49,6 +54,7 @@ app.use(passport.session());
 // API routes
 app.use('/api/movies', movieRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
 
 connectDB().then(
     () => {
@@ -57,3 +63,4 @@ connectDB().then(
         });
     }
 );
+
